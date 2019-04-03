@@ -5,13 +5,19 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/jaredsburrows.svg?style=social)](https://twitter.com/jaredsburrows)
 
 
-Gif List Grid Example using Flutter with Kotlin!
+Gif List Grid Example using [Flutter](https://flutter.dev/) with [Kotlin](https://kotlinlang.org/)!
 
 <a href="http://i.imgur.com/zErC6JV.png" target="_blank"><img src="http://i.imgur.com/zErC6JV.png" width="250px" /></a>
 
 ## Build the App
 
-    $ flutter build
+**Android**
+
+    $ flutter build apk
+
+**iOS**
+
+    $ flutter build ios
 
 ## Install the App
 

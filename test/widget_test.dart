@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:flutter_gif_example/main.dart';
 
 void main() {
@@ -18,5 +19,12 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+
+
+    expect(find.text('My Flutter App'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'My Flutter App'), findsOneWidget);
+
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.widgetWithIcon(FloatingActionButton, Icons.add), findsOneWidget);
   });
 }

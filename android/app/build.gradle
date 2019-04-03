@@ -27,26 +27,49 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion buildConfig.compileSdk
+
+  defaultConfig {
+    applicationId "com.burrowsapps.example.gif"
+    minSdkVersion buildConfig.minSdk
+    targetSdkVersion buildConfig.targetSdk
+    versionCode flutterVersionCode.toInteger()
+    versionName flutterVersionName
+    resConfigs 'en'
+    vectorDrawables.useSupportLibrary true
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+  }
+
+  compileOptions {
+    sourceCompatibility versions.java
+    targetCompatibility versions.java
+  }
+
+  buildTypes {
+    debug {
+      signingConfig signingConfigs.debug
+    }
+
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+      // Signing with the debug keys for now, so `flutter run --release` works.
+      signingConfig signingConfigs.debug
+    }
+  }
 
   lintOptions {
     disable 'InvalidPackage'
   }
 
-  defaultConfig {
-    applicationId "com.burrowsapps.example.gif"
-    minSdkVersion 16
-    targetSdkVersion 28
-    versionCode flutterVersionCode.toInteger()
-    versionName flutterVersionName
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-
-  buildTypes {
-    release {
-      // Signing with the debug keys for now, so `flutter run --release` works.
-      signingConfig signingConfigs.debug
-    }
+  packagingOptions {
+    exclude '**/*.kotlin_module'
+    exclude '**/*.version'
+    exclude '**/kotlin*/**'
+    exclude '**/*.txt'
+    exclude '**/*.xml'
+    exclude '**/*.properties'
   }
 }
 
@@ -61,4 +84,24 @@ dependencies {
 
   androidTestImplementation 'com.android.support.test:runner:1.0.2'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+tasks.withType(JavaCompile) {
+  sourceCompatibility = versions.java
+  targetCompatibility = versions.java
+
+  configure(options) {
+    compilerArgs << '-Xlint:all'
+    compilerArgs << '-Xlint:-options'
+    compilerArgs << '-Xlint:-classfile'
+    compilerArgs << '-Werror'
+    encoding = 'utf-8'
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+  kotlinOptions {
+    jvmTarget = versions.java
+    allWarningsAsErrors = true
+  }
 }
