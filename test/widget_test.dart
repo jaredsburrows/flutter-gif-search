@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gif_search/main.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_gif_example/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -20,11 +19,11 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
 
-
     expect(find.text('My Flutter App'), findsOneWidget);
     expect(find.widgetWithText(AppBar, 'My Flutter App'), findsOneWidget);
 
     expect(find.byType(FloatingActionButton), findsOneWidget);
-    expect(find.widgetWithIcon(FloatingActionButton, Icons.add), findsOneWidget);
+    expect(
+        find.widgetWithIcon(FloatingActionButton, Icons.add), findsOneWidget);
   });
 }

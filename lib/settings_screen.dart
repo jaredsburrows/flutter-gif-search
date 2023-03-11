@@ -13,10 +13,10 @@ class SettingsScreen extends StatelessWidget {
       body: Builder(
         builder: (BuildContext context) {
           return Center(
-            child: RaisedButton(
+            child: ElevatedButton(
               child: Text('Click here'),
               onPressed: () {
-                Scaffold.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text('Hello!'),
                 ));
               },

@@ -1,107 +1,78 @@
 def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
+def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
-  localPropertiesFile.withReader('UTF-8') { reader ->
+  localPropertiesFile.withReader("UTF-8") { reader ->
     localProperties.load(reader)
   }
 }
 
-def flutterRoot = localProperties.getProperty('flutter.sdk')
+def flutterRoot = localProperties.getProperty("flutter.sdk")
 if (flutterRoot == null) {
   throw new GradleException(
     "Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
-  flutterVersionCode = '1'
+  flutterVersionCode = "1"
 }
 
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
+def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
-  flutterVersionName = '1.0'
+  flutterVersionName = "1.0"
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.github.ben-manes.versions"
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-  compileSdkVersion buildConfig.compileSdk
+  compileSdkVersion 33
 
   defaultConfig {
-    applicationId "com.burrowsapps.example.gif"
-    minSdkVersion buildConfig.minSdk
-    targetSdkVersion buildConfig.targetSdk
+    applicationId "com.burrowsapps.gif.search.flutter.flutter_gif_search"
+    minSdkVersion 30
+    targetSdkVersion 33
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
-    resConfigs 'en'
-    vectorDrawables.useSupportLibrary true
-    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
   compileOptions {
-    sourceCompatibility versions.java
-    targetCompatibility versions.java
+    coreLibraryDesugaringEnabled = true
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
+
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_11
+  }
+
+  sourceSets {
+    main.java.srcDirs += "src/main/kotlin"
   }
 
   buildTypes {
-    debug {
-      signingConfig signingConfigs.debug
-    }
-
     release {
-      minifyEnabled true
-      shrinkResources true
-      proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
       // Signing with the debug keys for now, so `flutter run --release` works.
       signingConfig signingConfigs.debug
     }
   }
 
-  lintOptions {
-    disable 'InvalidPackage'
-  }
-
-  packagingOptions {
-    exclude '**/*.kotlin_module'
-    exclude '**/*.version'
-    exclude '**/kotlin*/**'
-    exclude '**/*.txt'
-    exclude '**/*.xml'
-    exclude '**/*.properties'
+  dependenciesInfo {
+    includeInApk = false
+    includeInBundle = false
   }
 }
 
 flutter {
-  source '../..'
+  source "../.."
 }
 
 dependencies {
-  implementation deps.kotlin.stdlib.jdk
+  coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
 
-  testImplementation 'junit:junit:4.12'
-
-  androidTestImplementation 'com.android.support.test:runner:1.0.2'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-}
-
-tasks.withType(JavaCompile) {
-  sourceCompatibility = versions.java
-  targetCompatibility = versions.java
-
-  configure(options) {
-    compilerArgs << '-Xlint:all'
-    compilerArgs << '-Xlint:-options'
-    compilerArgs << '-Xlint:-classfile'
-    compilerArgs << '-Werror'
-    encoding = 'utf-8'
-  }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-  kotlinOptions {
-    jvmTarget = versions.java
-    allWarningsAsErrors = true
-  }
+  implementation "org.jetbrains.kotlin:kotlin-bom:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  implementation "com.google.android.material:material:1.6.0"
 }
