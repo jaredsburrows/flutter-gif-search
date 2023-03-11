@@ -60,8 +60,11 @@ jobs:
       - name: Build iOS
         run: flutter build ios --debug --no-codesign
 
+      - name: Build Website
+        run: flutter build web --base-href /flutter-gif-search/
+
       - name: Publish Website
-        if: github.ref == 'refs/heads/main'
+        if: github.repository == 'jaredsburrows/flutter-gif-search' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
