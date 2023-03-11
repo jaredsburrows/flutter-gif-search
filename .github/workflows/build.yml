@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [ opened, labeled, unlabeled, synchronize ]
 
@@ -64,7 +64,7 @@ jobs:
         run: flutter build web --base-href /flutter-gif-search/
 
       - name: Publish Website
-        if: github.repository == 'jaredsburrows/flutter-gif-search' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
