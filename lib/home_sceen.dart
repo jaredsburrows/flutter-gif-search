@@ -46,7 +46,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
@@ -54,7 +54,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       drawer: _getNavDrawer(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Click!'),
             action: SnackBarAction(
               label: 'Undo',
@@ -128,7 +128,7 @@ class ContactModal {
   final String fullName;
   final String email;
 
-  const ContactModal({this.fullName, this.email});
+  const ContactModal({required this.fullName, required this.email});
 }
 
 class ContactsList extends StatelessWidget {
@@ -146,8 +146,8 @@ class ContactsList extends StatelessWidget {
 
   List<ContactListItem> _buildContactsList() {
     return _contactModal
-      .map((contact) => new ContactListItem(contact))
-      .toList();
+        .map((contact) => new ContactListItem(contact))
+        .toList();
   }
 }
 
@@ -177,7 +177,7 @@ class ContactPage extends StatelessWidget {
   }
 
   List<ContactModal> _buildContactList() {
-    List<ContactModal> items = List<ContactModal>();
+    List<ContactModal> items = [];
     for (int i = 0; i < 10; i++) {
       items.add(ContactModal(
         fullName: 'Jared Burrows',

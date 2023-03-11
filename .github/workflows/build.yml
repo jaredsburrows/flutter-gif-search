@@ -1,0 +1,70 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, labeled, unlabeled, synchronize ]
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true -Dkotlin.incremental=false -Dorg.gradle.jvmargs="-Xmx4g -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:MaxMetaspaceSize=1024m"
+
+jobs:
+  build:
+    name: JDK ${{ matrix.java-version }}
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version:
+          - 19
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3.3.0
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1.0.6
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3.3.0
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+            ~/.android/build-cache
+            /Users/runner/hostedtoolcache/flutter
+            /Users/runner/.pub-cache
+          key: ${{ runner.os }}-build
+          restore-keys: |
+            ${{ runner.os }}-build
+
+      - name: Configure JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v3.10.0
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java-version }}
+          cache: gradle
+
+      - name: Configure Flutter
+        uses: subosito/flutter-action@v2.8.0
+        with:
+          channel: stable
+          cache: true
+
+      - name: Build Android
+        run: flutter build apk --debug
+
+      - name: Build iOS
+        run: flutter build ios --debug --no-codesign
+
+      - name: Publish Website
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          user_name: "Github Actions"
+          user_email: "action@github.com"
