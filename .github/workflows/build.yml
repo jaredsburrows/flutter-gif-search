@@ -57,6 +57,9 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Run Analyzer
+        run: flutter analyze --suppress-analytics --no-fatal-infos --no-fatal-warnings
+
       - name: Build Android
         run: flutter build apk --debug
 

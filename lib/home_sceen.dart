@@ -4,11 +4,13 @@ import 'account_screen.dart';
 import 'settings_screen.dart';
 
 class MyHomeScreen extends StatefulWidget {
+  const MyHomeScreen({super.key});
+
   @override
-  _MyHomeScreenState createState() => _MyHomeScreenState();
+  MyHomeScreenState createState() => MyHomeScreenState();
 }
 
-class _MyHomeScreenState extends State<MyHomeScreen> {
+class MyHomeScreenState extends State<MyHomeScreen> {
   int _counter = 0;
 
   @override
@@ -21,7 +23,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Flutter App'),
+        title: const Text('Top Trending Gifs'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -43,7 +45,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('You have pushed the button this many times:'),
+            const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -55,7 +57,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Click!'),
+            content: const Text('Click!'),
             action: SnackBarAction(
               label: 'Undo',
               onPressed: _incrementCounter,
@@ -63,7 +65,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           ));
         },
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -80,7 +82,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   }
 
   Drawer _getNavDrawer(BuildContext context) {
-    ListTile _getNavItem(IconData icon, String title, String routeName) {
+    ListTile getNavItem(IconData icon, String title, String routeName) {
       return ListTile(
         leading: Icon(icon),
         title: Text(title),
@@ -99,27 +101,27 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       );
     }
 
-    var _myNavChildren = [
+    var myNavChildren = [
       // Header
-      DrawerHeader(
+      const DrawerHeader(
         child: Text('Header'),
       ),
       // Nav Items
-      _getNavItem(Icons.home, 'Home', '/'),
-      _getNavItem(Icons.account_box, 'Account', AccountScreen.routeName),
-      _getNavItem(Icons.settings, 'Settings', SettingsScreen.routeName),
+      getNavItem(Icons.home, 'Home', '/'),
+      getNavItem(Icons.account_box, 'Account', AccountScreen.routeName),
+      getNavItem(Icons.settings, 'Settings', SettingsScreen.routeName),
       // About dialog
-      AboutListTile(
-        child: Text('About'),
+      const AboutListTile(
         applicationName: 'Application Name',
         applicationVersion: 'v1.0.0',
         applicationIcon: Icon(Icons.adb),
         icon: Icon(Icons.info),
+        child: Text('About'),
       )
     ];
 
     return Drawer(
-      child: ListView(children: _myNavChildren),
+      child: ListView(children: myNavChildren),
     );
   }
 }
@@ -134,43 +136,43 @@ class ContactModal {
 class ContactsList extends StatelessWidget {
   final List<ContactModal> _contactModal;
 
-  ContactsList(this._contactModal);
+  const ContactsList(this._contactModal, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return new ListView(
-      padding: new EdgeInsets.symmetric(vertical: 8.0),
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       children: _buildContactsList(),
     );
   }
 
   List<ContactListItem> _buildContactsList() {
-    return _contactModal
-        .map((contact) => new ContactListItem(contact))
-        .toList();
+    return _contactModal.map((contact) => ContactListItem(contact)).toList();
   }
 }
 
 class ContactListItem extends StatelessWidget {
   final ContactModal _contactModal;
 
-  ContactListItem(this._contactModal);
+  const ContactListItem(this._contactModal, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return new ListTile(
-      leading: new CircleAvatar(child: new Text(_contactModal.fullName[0])),
-      title: new Text(_contactModal.fullName),
-      subtitle: new Text(_contactModal.email),
+    return ListTile(
+      leading: CircleAvatar(child: Text(_contactModal.fullName[0])),
+      title: Text(_contactModal.fullName),
+      subtitle: Text(_contactModal.email),
     );
   }
 }
 
 class ContactPage extends StatelessWidget {
+  const ContactPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new ContactsList(
+    return Scaffold(
+      body: ContactsList(
         _buildContactList(),
       ),
     );
@@ -179,7 +181,7 @@ class ContactPage extends StatelessWidget {
   List<ContactModal> _buildContactList() {
     List<ContactModal> items = [];
     for (int i = 0; i < 10; i++) {
-      items.add(ContactModal(
+      items.add(const ContactModal(
         fullName: 'Jared Burrows',
         email: 'jaredsburrows@gmail.com',
       ));

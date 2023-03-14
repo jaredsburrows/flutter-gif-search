@@ -31,7 +31,7 @@ android {
   compileSdkVersion 33
 
   defaultConfig {
-    applicationId "com.burrowsapps.gif.search.flutter.flutter_gif_search"
+    applicationId "com.burrowsapps.gif.search.flutter"
     minSdkVersion 30
     targetSdkVersion 33
     versionCode flutterVersionCode.toInteger()
