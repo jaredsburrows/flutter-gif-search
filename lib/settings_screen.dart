@@ -4,19 +4,21 @@ import 'package:flutter/material.dart';
 class SettingsScreen extends StatelessWidget {
   static const String routeName = '/settings';
 
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Demo'),
+        title: const Text('Demo'),
       ),
       body: Builder(
         builder: (BuildContext context) {
           return Center(
             child: ElevatedButton(
-              child: Text('Click here'),
+              child: const Text('Click here'),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Hello!'),
                 ));
               },
