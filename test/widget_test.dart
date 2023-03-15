@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gif_search/app.dart';
+import 'package:flutter_gif_search/main_application.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

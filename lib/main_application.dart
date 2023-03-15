@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'home_sceen.dart';
+import 'package:flutter_gif_search/main_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
