@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gif_search/main_application.dart';
 import 'package:url_strategy/url_strategy.dart';
-
-import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
