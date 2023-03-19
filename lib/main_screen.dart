@@ -78,7 +78,8 @@ class MyHomeScreenState extends State<MyHomeScreen> {
           // TODO optimize the border decoration
           return Container(
             alignment: Alignment.center,
-            height: 135.0,
+            width: double.infinity,
+            height: double.infinity,
             margin: EdgeInsets.zero,
             decoration: const BoxDecoration(
               border: Border.symmetric(
@@ -86,12 +87,19 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                 horizontal: BorderSide(width: 0.5, color: Colors.white),
               ),
             ),
-            child: CachedNetworkImage(
-              // 'https://source.unsplash.com/1600x900/?happy',
-              // "https://source.unsplash.com/random?sig=${0 + random.nextInt(dataList.length - 0)}",
-              imageUrl: "https://source.unsplash.com/random?sig=$value",
-              height: 135.0,
-              fit: BoxFit.fill,
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: CachedNetworkImage(
+                  imageUrl: "https://source.unsplash.com/random?sig=$value",
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
             ),
           );
         }).toList(),
@@ -116,7 +124,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
   }
 
   void _addImageToList(int pageCount) {
-    for (int i = (pageCount * 20) - 20; i < pageCount * 20; i++) {
+    for (int i = (pageCount * 15) - 15; i < pageCount * 15; i++) {
       _dataList.add(i);
     }
 
