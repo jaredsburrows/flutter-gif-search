@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MyHomeScreen extends StatefulWidget {
@@ -46,9 +47,10 @@ class MyHomeScreenState extends State<MyHomeScreen> {
         title: const Text('Top Trending Gifs'),
         actions: [
           IconButton(
+              tooltip: "Search gifs",
               icon: const Icon(Icons.search),
               onPressed: () {
-                // TODO
+                // TODO Expand search and filter list
               }),
           PopupMenuButton(itemBuilder: (context) {
             return [
@@ -59,11 +61,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
             ];
           }, onSelected: (value) {
             if (value == 0) {
-              showLicensePage(
-                context: context,
-                applicationName: 'Gif Search',
-                applicationVersion: _packageInfo.version,
-              );
+              _showLicensePage(context);
             }
           }),
         ],
@@ -75,35 +73,109 @@ class MyHomeScreenState extends State<MyHomeScreen> {
         mainAxisSpacing: 1.0,
         physics: const AlwaysScrollableScrollPhysics(),
         children: _dataList.map((value) {
-          // TODO optimize the border decoration
-          return Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: double.infinity,
-            margin: EdgeInsets.zero,
-            decoration: const BoxDecoration(
-              border: Border.symmetric(
-                vertical: BorderSide(width: 0.5, color: Colors.white),
-                horizontal: BorderSide(width: 0.5, color: Colors.white),
-              ),
-            ),
-            child: SizedBox(
+          final screenWidth = MediaQuery.of(context).size.width;
+          final screenHeight = MediaQuery.of(context).size.height;
+          final minDimension =
+              (screenWidth < screenHeight) ? screenWidth : screenHeight;
+          final sideLength = minDimension * 0.5;
+
+          final imageUrl = "https://source.unsplash.com/random?sig=$value";
+
+          return InkWell(
+            onTap: () {
+              _showGifDialog(context, sideLength, imageUrl);
+            },
+            child: Container(
+              alignment: Alignment.center,
               width: double.infinity,
               height: double.infinity,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
-                child: CachedNetworkImage(
-                  imageUrl: "https://source.unsplash.com/random?sig=$value",
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+              margin: EdgeInsets.zero,
+              padding: const EdgeInsets.all(1.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0.0),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(
+                      widthFactor: sideLength / 3,
+                      child: const CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                 ),
               ),
             ),
           );
         }).toList(),
       ),
+    );
+  }
+
+  Future<void> _showLicensePage(BuildContext context) async {
+    showLicensePage(
+      context: context,
+      applicationName: 'Gif Search',
+      applicationVersion: _packageInfo.version,
+    );
+  }
+
+  Future<void> _showGifDialog(
+      BuildContext context, double height, String imageUrl) async {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, "Cancel"),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Clipboard.setData(ClipboardData(text: imageUrl)).then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Image Url copied to clipboard.")));
+                });
+
+                Navigator.pop(context, "Copy Url");
+              },
+              child: const Text("Copy Url"),
+            ),
+            TextButton(
+              // TODO update to save to gallery
+              onPressed: () => Navigator.pop(context, "Save Image"),
+              child: const Text("Save Image"),
+            ),
+          ],
+          content: Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            height: height,
+            margin: EdgeInsets.zero,
+            padding: const EdgeInsets.all(1.0),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Center(
+                    widthFactor: height / 3,
+                    child: const CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
