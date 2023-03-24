@@ -35,6 +35,7 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper/
             ~/.android/build-cache
+            ios/Pods
             /Users/runner/hostedtoolcache/flutter
             /Users/runner/.pub-cache
           key: ${{ runner.os }}-build
@@ -58,7 +59,10 @@ jobs:
           cache: true
 
       - name: Run Analyzer
-        run: flutter analyze --suppress-analytics --no-fatal-infos --no-fatal-warnings
+        run: flutter analyze
+
+      - name: Run Unit Tests
+        run: flutter test --coverage -r compact
 
       - name: Build Android
         run: flutter build apk --debug
