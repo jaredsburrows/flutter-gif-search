@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MyHomeScreen extends StatefulWidget {
@@ -44,19 +45,19 @@ class MyHomeScreenState extends State<MyHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top Trending Gifs'),
+        title: PlatformText('Top Trending Gifs'),
         actions: [
           IconButton(
-              tooltip: "Search gifs",
-              icon: const Icon(Icons.search),
+              tooltip: 'Search gifs',
+              icon: Icon(PlatformIcons(context).search),
               onPressed: () {
                 // TODO Expand search and filter list
               }),
           PopupMenuButton(itemBuilder: (context) {
             return [
-              const PopupMenuItem<int>(
+              PopupMenuItem<int>(
                 value: 0,
-                child: Text("Open Source Licenses"),
+                child: PlatformText('Open Source Licenses'),
               ),
             ];
           }, onSelected: (value) {
@@ -73,8 +74,9 @@ class MyHomeScreenState extends State<MyHomeScreen> {
         mainAxisSpacing: 1.0,
         physics: const AlwaysScrollableScrollPhysics(),
         children: _dataList.map((value) {
-          final screenWidth = MediaQuery.of(context).size.width;
-          final screenHeight = MediaQuery.of(context).size.height;
+          final screenSize = MediaQuery.of(context).size;
+          final screenWidth = screenSize.width;
+          final screenHeight = screenSize.height;
           final minDimension =
               (screenWidth < screenHeight) ? screenWidth : screenHeight;
           final sideLength = minDimension * 0.5;
@@ -104,7 +106,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                       child: const CircularProgressIndicator(),
                     ),
                     errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                        Icon(PlatformIcons(context).error),
                   ),
                 ),
               ),
@@ -131,24 +133,27 @@ class MyHomeScreenState extends State<MyHomeScreen> {
         return AlertDialog(
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context, "Cancel"),
-              child: const Text("Cancel"),
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: PlatformText('Cancel'),
             ),
             TextButton(
               onPressed: () async {
                 Clipboard.setData(ClipboardData(text: imageUrl)).then((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Image Url copied to clipboard.")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: PlatformText('Image Url copied to clipboard.'),
+                    ),
+                  );
                 });
 
-                Navigator.pop(context, "Copy Url");
+                Navigator.pop(context, 'Copy Url');
               },
-              child: const Text("Copy Url"),
+              child: PlatformText('Copy Url'),
             ),
             TextButton(
               // TODO update to save to gallery
-              onPressed: () => Navigator.pop(context, "Save Image"),
-              child: const Text("Save Image"),
+              onPressed: () => Navigator.pop(context, 'Save Image'),
+              child: PlatformText('Save Image'),
             ),
           ],
           content: Container(
@@ -169,7 +174,8 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                     widthFactor: height / 3,
                     child: const CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  errorWidget: (context, url, error) =>
+                      Icon(PlatformIcons(context).error),
                 ),
               ),
             ),

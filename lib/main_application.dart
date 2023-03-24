@@ -68,7 +68,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             darkTheme: darkTheme,
           ),
           cupertino: (_, __) => CupertinoAppData(
-            // TODO dark mode for ios Cupertino
             theme: MaterialBasedCupertinoThemeData(
               materialTheme: lightTheme.copyWith(brightness: _brightness),
             ),
