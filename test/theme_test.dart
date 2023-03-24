@@ -4,49 +4,44 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Theme', () {
-    testWidgets('Applies light theme when brightness is set to light',
-        (WidgetTester tester) async {
-      // Set the brightness to light mode
-      tester.binding.window.platformDispatcher.platformBrightnessTestValue =
-          Brightness.light;
+  group('Check Theme', () {
+    final elements = {
+      "App": find.byType(PlatformApp),
+      "AppBar": find.byType(AppBar),
+      "AppBar Title": find.text('Top Trending Gifs'),
+      "AppBar Search Icon": find.byIcon(Icons.search),
+      "AppBar More Icon ": find.byIcon(Icons.adaptive.more),
+    };
 
-      // Build the MyApp widget and trigger a frame
-      await tester.pumpWidget(const MyApp());
+    elements.forEach((name, element) {
+      testWidgets(
+          "Applies light theme and verify $name brightness is set to light",
+          (WidgetTester tester) async {
+        TestWidgetsFlutterBinding.ensureInitialized();
+        // Set the brightness to light mode
+        tester.binding.window.platformDispatcher.platformBrightnessTestValue =
+            Brightness.light;
 
-      // Verify that the current theme brightness is set to light
-      final elements = [
-        find.byType(PlatformApp),
-        find.byType(AppBar),
-        find.text('Top Trending Gifs'),
-        find.byIcon(Icons.search),
-        find.byIcon(Icons.adaptive.more)
-      ];
-      for (var element in elements) {
+        // Build the MyApp widget and trigger a frame
+        await tester.pumpWidget(const MyApp());
+
+        // Verify that the current theme brightness is set to light
         expect(Theme.of(tester.element(element)).brightness, Brightness.light);
-      }
-    });
+      });
 
-    testWidgets('Applies dark theme when brightness is set to dark',
-        (WidgetTester tester) async {
-      // Set the brightness to dark mode
-      tester.binding.window.platformDispatcher.platformBrightnessTestValue =
-          Brightness.dark;
+      testWidgets(
+          "Applies dark theme and verify $name brightness is set to dark",
+          (WidgetTester tester) async {
+        // Set the brightness to dark mode
+        tester.binding.window.platformDispatcher.platformBrightnessTestValue =
+            Brightness.dark;
 
-      // Build the MyApp widget and trigger a frame
-      await tester.pumpWidget(const MyApp());
+        // Build the MyApp widget and trigger a frame
+        await tester.pumpWidget(const MyApp());
 
-      // Verify that the current theme brightness is set to dark
-      final elements = [
-        find.byType(PlatformApp),
-        find.byType(AppBar),
-        find.text('Top Trending Gifs'),
-        find.byIcon(Icons.search),
-        find.byIcon(Icons.adaptive.more)
-      ];
-      for (var element in elements) {
+        // Verify that the current theme brightness is set to dark
         expect(Theme.of(tester.element(element)).brightness, Brightness.dark);
-      }
+      });
     });
   });
 }
