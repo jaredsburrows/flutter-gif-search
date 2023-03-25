@@ -62,7 +62,7 @@ jobs:
         run: flutter analyze
 
       - name: Run Unit Tests
-        run: flutter test --coverage -r compact
+        run: flutter test --coverage
 
       - name: Build Android
         run: flutter build apk --debug

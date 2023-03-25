@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:enough_platform_widgets/enough_platform_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MyHomeScreen extends StatefulWidget {
@@ -47,6 +47,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
       appBar: AppBar(
         title: PlatformText('Top Trending Gifs'),
         actions: [
+          // TODO tool tip? PlatformIconButton
           IconButton(
               tooltip: 'Search gifs',
               icon: Icon(PlatformIcons(context).search),
@@ -83,7 +84,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
 
           final imageUrl = "https://source.unsplash.com/random?sig=$value";
 
-          return InkWell(
+          return PlatformInkWell(
             onTap: () {
               _showGifDialog(context, sideLength, imageUrl);
             },
@@ -103,7 +104,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Center(
                       widthFactor: sideLength / 3,
-                      child: const CircularProgressIndicator(),
+                      child: PlatformCircularProgressIndicator(),
                     ),
                     errorWidget: (context, url, error) =>
                         Icon(PlatformIcons(context).error),
@@ -127,16 +128,18 @@ class MyHomeScreenState extends State<MyHomeScreen> {
 
   Future<void> _showGifDialog(
       BuildContext context, double height, String imageUrl) async {
-    showDialog<void>(
+    showPlatformDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        // TODO padding on dialog buttons is weird on Android
+        return PlatformAlertDialog(
           actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: PlatformText('Cancel'),
+            PlatformDialogAction(
+              // TODO update to save to gallery
+              onPressed: () => Navigator.pop(context, 'Save Image'),
+              child: PlatformText('Save Image'),
             ),
-            TextButton(
+            PlatformDialogAction(
               onPressed: () async {
                 Clipboard.setData(ClipboardData(text: imageUrl)).then((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -150,10 +153,9 @@ class MyHomeScreenState extends State<MyHomeScreen> {
               },
               child: PlatformText('Copy Url'),
             ),
-            TextButton(
-              // TODO update to save to gallery
-              onPressed: () => Navigator.pop(context, 'Save Image'),
-              child: PlatformText('Save Image'),
+            PlatformDialogAction(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: PlatformText('Cancel'),
             ),
           ],
           content: Container(
@@ -172,7 +174,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Center(
                     widthFactor: height / 3,
-                    child: const CircularProgressIndicator(),
+                    child: PlatformCircularProgressIndicator(),
                   ),
                   errorWidget: (context, url, error) =>
                       Icon(PlatformIcons(context).error),

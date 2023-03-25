@@ -1,23 +1,26 @@
+import 'package:enough_platform_widgets/enough_platform_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif_search/main_application.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Check Theme', () {
     final elements = {
+      // App
       "App": find.byType(PlatformApp),
+      // AppBar
       "AppBar": find.byType(AppBar),
       "AppBar Title": find.text('Top Trending Gifs'),
       "AppBar Search Icon": find.byIcon(Icons.search),
-      "AppBar More Icon ": find.byIcon(Icons.adaptive.more),
+      "AppBar More Icon": find.byIcon(Icons.adaptive.more),
+      // Gif List
+      "Gif List": find.byType(GridView),
     };
 
     elements.forEach((name, element) {
       testWidgets(
           "Applies light theme and verify $name brightness is set to light",
           (WidgetTester tester) async {
-        TestWidgetsFlutterBinding.ensureInitialized();
         // Set the brightness to light mode
         tester.binding.window.platformDispatcher.platformBrightnessTestValue =
             Brightness.light;

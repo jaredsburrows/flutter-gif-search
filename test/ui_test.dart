@@ -3,7 +3,7 @@ import 'package:flutter_gif_search/main_application.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Check AppBar', () {
+  group('Check the AppBar', () {
     testWidgets('Verify AppBar is showing the title',
         (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
@@ -46,6 +46,21 @@ void main() {
           .pump(const Duration(seconds: 1)); // finish the menu animation
 
       expect(find.text('Open Source Licenses'), findsOneWidget);
+    });
+  });
+
+  group('Check the Gif List', () {
+    testWidgets('Verify GridView is showing', (WidgetTester tester) async {
+      await tester.pumpWidget(const MyApp());
+
+      final gridViewFinder = find.byType(GridView);
+      expect(gridViewFinder, findsOneWidget);
+
+      GridView gridView = tester.firstWidget(gridViewFinder);
+      expect(
+          (gridView.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount)
+              .crossAxisCount,
+          3);
     });
   });
 }

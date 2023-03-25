@@ -69,7 +69,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
           cupertino: (_, __) => CupertinoAppData(
             theme: MaterialBasedCupertinoThemeData(
-              materialTheme: lightTheme.copyWith(brightness: _brightness),
+              materialTheme: lightTheme.copyWith(
+                brightness: _brightness,
+              ),
             ),
           ),
         ),
