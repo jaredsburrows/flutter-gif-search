@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gif_search/main_application.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -16,7 +17,8 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
 
-      final searchIcon = find.byIcon(Icons.search);
+      final BuildContext context = tester.element(find.byType(MyApp));
+      final searchIcon = find.byIcon(PlatformIcons(context).search);
       expect(searchIcon, findsOneWidget);
 
       final searchIconToolTip = find.byTooltip('Search gifs');

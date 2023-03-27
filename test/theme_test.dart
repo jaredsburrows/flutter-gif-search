@@ -4,14 +4,14 @@ import 'package:flutter_gif_search/main_application.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Check Theme', () {
+  group('Check Theme - main screen', () {
     final elements = {
       // App
       "App": find.byType(PlatformApp),
       // AppBar
       "AppBar": find.byType(AppBar),
       "AppBar Title": find.text('Top Trending Gifs'),
-      "AppBar Search Icon": find.byIcon(Icons.search),
+      "AppBar Search Icon": find.byIcon(Icons.search), // Platform?
       "AppBar More Icon": find.byIcon(Icons.adaptive.more),
       // Gif List
       "Gif List": find.byType(GridView),

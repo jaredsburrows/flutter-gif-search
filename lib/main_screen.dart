@@ -43,29 +43,34 @@ class MyHomeScreenState extends State<MyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         title: PlatformText('Top Trending Gifs'),
-        actions: [
+        trailingActions: [
           // TODO tool tip? PlatformIconButton
-          IconButton(
+          PlatformIconButton(
+            material: (_, __) => MaterialIconButtonData(
               tooltip: 'Search gifs',
-              icon: Icon(PlatformIcons(context).search),
-              onPressed: () {
-                // TODO Expand search and filter list
-              }),
-          PopupMenuButton(itemBuilder: (context) {
-            return [
-              PopupMenuItem<int>(
-                value: 0,
-                child: PlatformText('Open Source Licenses'),
+            ),
+            cupertino: (_, __) => CupertinoIconButtonData(
+              padding: const EdgeInsets.all(10.0),
+            ),
+            icon: Icon(PlatformIcons(context).search),
+            onPressed: () {
+              // TODO Expand search and filter list
+            },
+          ),
+          PlatformPopupMenu(
+            icon: Icon(Icons.adaptive.more),
+            options: [
+              PopupMenuOption(
+                label: 'Open Source Licenses',
+                onTap: (option) {
+                  _showLicensePage(context);
+                },
               ),
-            ];
-          }, onSelected: (value) {
-            if (value == 0) {
-              _showLicensePage(context);
-            }
-          }),
+            ],
+          ),
         ],
       ),
       body: GridView.count(
@@ -131,9 +136,9 @@ class MyHomeScreenState extends State<MyHomeScreen> {
     showPlatformDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        // TODO padding on dialog buttons is weird on Android
+        // TODO fix padding on Android dialog buttons
         return PlatformAlertDialog(
-          actions: <Widget>[
+          actions: [
             PlatformDialogAction(
               // TODO update to save to gallery
               onPressed: () => Navigator.pop(context, 'Save Image'),
@@ -142,6 +147,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
             PlatformDialogAction(
               onPressed: () async {
                 Clipboard.setData(ClipboardData(text: imageUrl)).then((_) {
+                  // TODO need ui snack bar for iOS
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: PlatformText('Image Url copied to clipboard.'),
@@ -195,7 +201,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
         _isLoading = true;
 
         if (_isLoading) {
-          _pageCount = _pageCount + 1;
+          _pageCount = (_dataList.length + 30) ~/ 30;
 
           _addImageToList(_pageCount);
         }
@@ -204,7 +210,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
   }
 
   void _addImageToList(int pageCount) {
-    for (int i = (pageCount * 15) - 15; i < pageCount * 15; i++) {
+    for (int i = (pageCount * 30) - 30; i < pageCount * 30; i++) {
       _dataList.add(i);
     }
 

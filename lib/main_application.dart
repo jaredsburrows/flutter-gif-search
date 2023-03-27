@@ -1,7 +1,7 @@
+import 'package:enough_platform_widgets/enough_platform_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif_search/main_screen.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -48,32 +48,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       brightness: Brightness.dark,
       primarySwatch: Colors.blue,
       useMaterial3: true,
+      cupertinoOverrideTheme: CupertinoThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color(Colors.blue.value),
+      ),
     );
 
     return Theme(
       data: _brightness == Brightness.light ? lightTheme : darkTheme,
       child: PlatformProvider(
-        builder: (context) => PlatformApp(
+        builder: (context) => const PlatformApp(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          localizationsDelegates: <LocalizationsDelegate<dynamic>>[
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Gif Search',
-          home: const MyHomeScreen(),
-          material: (_, __) => MaterialAppData(
-            themeMode: ThemeMode.system,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-          ),
-          cupertino: (_, __) => CupertinoAppData(
-            theme: MaterialBasedCupertinoThemeData(
-              materialTheme: lightTheme.copyWith(
-                brightness: _brightness,
-              ),
-            ),
-          ),
+          home: MyHomeScreen(),
         ),
       ),
     );

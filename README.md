@@ -4,8 +4,7 @@
 [![Build](https://github.com/jaredsburrows/flutter-gif-search/actions/workflows/build.yml/badge.svg)](https://github.com/jaredsburrows/flutter-gif-search/actions/workflows/build.yml)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jaredsburrows.svg?style=social)](https://twitter.com/jaredsburrows)
 
-
-Gif List Grid Example using [Flutter](https://flutter.dev/) with [Kotlin](https://kotlinlang.org/)!
+Gif List Grid Example using [Flutter](https://flutter.dev/)!
 
 <a href="https://i.imgur.com/zErC6JV.png" target="_blank"><img src="https://i.imgur.com/zErC6JV.png" width="250px" /></a>
 
@@ -18,6 +17,7 @@ flutter upgrade
 flutter pub get
 flutter pub upgrade --null-safety
 ```
+
 **Build All**
 
 ```shell
