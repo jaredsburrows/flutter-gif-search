@@ -16,7 +16,6 @@ jobs:
     runs-on: macos-latest
 
     strategy:
-      fail-fast: false
       matrix:
         java-version:
           - 19
@@ -62,7 +61,13 @@ jobs:
         run: flutter analyze
 
       - name: Run Unit Tests
-        run: flutter test --coverage
+        run: flutter test --coverage -r json > test-results.json 
+
+      - name: Publish Test Report
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.6.1
+        if: success() || failure()
+        with:
+          files: '**/test-results.json'
 
       - name: Build Android
         run: flutter build apk --debug
