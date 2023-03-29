@@ -62,7 +62,13 @@ jobs:
         run: flutter analyze
 
       - name: Run Unit Tests
-        run: flutter test --coverage
+        run: flutter test --coverage -r json > build/test-results.json 
+
+      - name: Publish Test Report
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.6.1
+        if: success() || failure()
+        with:
+          files: '**/build/test-results.json'
 
       - name: Build Android
         run: flutter build apk --debug
