@@ -60,13 +60,15 @@ jobs:
         run: flutter analyze
 
       - name: Run Unit Tests
-        run: flutter test --coverage -r json > test-results.json 
+        run: flutter test --coverage -r json | grep '^{' | jq -cM > unit-test-results.json
 
-      - name: Publish Test Report
+      - name: Publish Unit Test Report
         uses: EnricoMi/publish-unit-test-result-action/composite@v2.6.1
         if: always()
         with:
-          files: '**/test-results.json'
+          check_name: "Unit Test Results"
+          files: |
+            unit-test-results.json
 
       - name: Build Android
         run: flutter build apk --debug
