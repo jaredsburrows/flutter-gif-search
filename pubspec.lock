@@ -298,10 +298,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_platform_widgets
-      sha256: b787f001d659ce1fb601332e908efdf44dbedab832387b33162abeed60c1eca2
+      sha256: "53b3f61a9a974eebf3a366ca816dc56b22883619143ab041e100d0622f166e87"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
