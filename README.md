@@ -13,9 +13,11 @@ Gif List Grid Example using [Flutter](https://flutter.dev/)!
 **Flutter**
 
 ```shell
+rm -f ios/Podfile.lock
+rm -f pubspec.lock
 flutter upgrade
 flutter pub get
-flutter pub upgrade --null-safety
+flutter pub upgrade
 ```
 
 **Build All**
