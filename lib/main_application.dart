@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gif_search/main_screen.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -12,7 +14,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // See https://github.com/stryder-dev/flutter_platform_widgets/issues/202
-  Brightness _brightness = WidgetsBinding.instance.window.platformBrightness;
+  Brightness _brightness =
+      WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
   @override
   void initState() {
@@ -29,7 +32,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangePlatformBrightness() {
     setState(() {
-      _brightness = WidgetsBinding.instance.window.platformBrightness;
+      _brightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
     });
   }
 
@@ -39,19 +43,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       brightness: Brightness.light,
       primarySwatch: Colors.blue,
       useMaterial3: true,
-      cupertinoOverrideTheme: CupertinoThemeData(
-        brightness: Brightness.light,
-        primaryColor: Color(Colors.blue.value),
-      ),
     );
     final darkTheme = ThemeData(
       brightness: Brightness.dark,
       primarySwatch: Colors.blue,
       useMaterial3: true,
-      cupertinoOverrideTheme: CupertinoThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Color(Colors.blue.value),
-      ),
     );
 
     return Theme(

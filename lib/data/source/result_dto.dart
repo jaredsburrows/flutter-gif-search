@@ -10,6 +10,7 @@ class ResultDto {
 
   const ResultDto({this.media = const []});
 
-  factory ResultDto.fromJson(Map<String, dynamic> json) => _$ResultDtoFromJson(json);
+  factory ResultDto.fromJson(Map<String, dynamic> json) =>
+      _$ResultDtoFromJson(json);
   Map<String, dynamic> toJson() => _$ResultDtoToJson(this);
 }

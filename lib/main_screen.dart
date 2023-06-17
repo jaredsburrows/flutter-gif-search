@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MyHomeScreen extends StatefulWidget {
-  const MyHomeScreen({super.key});
+  const MyHomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  MyHomeScreenState createState() => MyHomeScreenState();
+  State<MyHomeScreen> createState() => MyHomeScreenState();
 }
 
 class MyHomeScreenState extends State<MyHomeScreen> {
@@ -45,7 +47,8 @@ class MyHomeScreenState extends State<MyHomeScreen> {
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBar: PlatformAppBar(
-        title: PlatformText('Top Trending Gifs'),
+        // TODO use PlatformText, failing test
+        title: const Text('Top Trending Gifs'),
         trailingActions: [
           // TODO tool tip? PlatformIconButton
           PlatformIconButton(
