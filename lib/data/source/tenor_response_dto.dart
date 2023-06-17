@@ -15,6 +15,7 @@ class TenorResponseDto {
 
   const TenorResponseDto({this.results = const [], this.next = '0.0'});
 
-  factory TenorResponseDto.fromJson(Map<String, dynamic> json) => _$TenorResponseDtoFromJson(json);
+  factory TenorResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$TenorResponseDtoFromJson(json);
   Map<String, dynamic> toJson() => _$TenorResponseDtoToJson(this);
 }

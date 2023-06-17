@@ -22,7 +22,7 @@ void main() {
           "Applies light theme and verify $name brightness is set to light",
           (WidgetTester tester) async {
         // Set the brightness to light mode
-        tester.binding.window.platformDispatcher.platformBrightnessTestValue =
+        tester.binding.platformDispatcher.platformBrightnessTestValue =
             Brightness.light;
 
         // Build the MyApp widget and trigger a frame
@@ -36,7 +36,7 @@ void main() {
           "Applies dark theme and verify $name brightness is set to dark",
           (WidgetTester tester) async {
         // Set the brightness to dark mode
-        tester.binding.window.platformDispatcher.platformBrightnessTestValue =
+        tester.binding.platformDispatcher.platformBrightnessTestValue =
             Brightness.dark;
 
         // Build the MyApp widget and trigger a frame

@@ -69,15 +69,16 @@ jobs:
         run: flutter analyze
 
       - name: Run Unit Tests
-        run: flutter test --coverage -r json | grep '^{' | jq -cM > unit-test-results.json
+        run: flutter test --coverage --test-randomize-ordering-seed=random --file-reporter json:build/reports/unit-test-results.json
 
       - name: Publish Unit Test Report
         uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
         if: always()
         with:
           check_name: "Unit Test Results"
+          comment_mode: off
           files: |
-            unit-test-results.json
+            build/reports/unit-test-results.json
 
       - name: Build Android
         run: flutter build apk --debug
