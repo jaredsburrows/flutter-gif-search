@@ -7,20 +7,20 @@ void main() {
   group('Check Theme - main screen', () {
     final elements = {
       // App
-      "App": find.byType(PlatformApp),
+      'App': find.byType(PlatformApp),
       // AppBar
-      "AppBar": find.byType(AppBar),
-      "AppBar Title": find.text('Top Trending Gifs'),
-      "AppBar Search Icon": find.byIcon(Icons.search), // Platform?
-      "AppBar More Icon": find.byIcon(Icons.adaptive.more),
+      'AppBar': find.byType(AppBar),
+      'AppBar Title': find.text('Top Trending Gifs'),
+      'AppBar Search Icon': find.byIcon(Icons.search), // Platform?
+      'AppBar More Icon': find.byIcon(Icons.adaptive.more),
       // Gif List
-      "Gif List": find.byType(GridView),
+      'Gif List': find.byType(GridView),
     };
 
     elements.forEach((name, element) {
       testWidgets(
-          "Applies light theme and verify $name brightness is set to light",
-          (WidgetTester tester) async {
+          'Applies light theme and verify $name brightness is set to light',
+          (tester) async {
         // Set the brightness to light mode
         tester.binding.platformDispatcher.platformBrightnessTestValue =
             Brightness.light;
@@ -33,8 +33,8 @@ void main() {
       });
 
       testWidgets(
-          "Applies dark theme and verify $name brightness is set to dark",
-          (WidgetTester tester) async {
+          'Applies dark theme and verify $name brightness is set to dark',
+          (tester) async {
         // Set the brightness to dark mode
         tester.binding.platformDispatcher.platformBrightnessTestValue =
             Brightness.dark;

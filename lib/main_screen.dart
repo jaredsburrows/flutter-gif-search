@@ -90,7 +90,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
               (screenWidth < screenHeight) ? screenWidth : screenHeight;
           final sideLength = minDimension * 0.5;
 
-          final imageUrl = "https://source.unsplash.com/random?sig=$value";
+          final imageUrl = "https://source.unsplash.com/random/?&$value";
 
           return PlatformInkWell(
             onTap: () {

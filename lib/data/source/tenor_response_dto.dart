@@ -1,5 +1,5 @@
+import 'package:flutter_gif_search/data/source/result_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'result_dto.dart';
 
 part 'tenor_response_dto.g.dart';
 

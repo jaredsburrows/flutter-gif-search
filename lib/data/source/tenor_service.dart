@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_gif_search/data/source/tenor_response_dto.dart';
 import 'package:retrofit/retrofit.dart';
-
-import 'tenor_response_dto.dart';
 
 part 'tenor_service.g.dart';
 
