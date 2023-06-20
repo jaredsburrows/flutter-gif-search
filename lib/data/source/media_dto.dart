@@ -1,6 +1,5 @@
+import 'package:flutter_gif_search/data/source/gif_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'gif_dto.dart';
 
 part 'media_dto.g.dart';
 

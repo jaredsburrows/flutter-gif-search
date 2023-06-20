@@ -5,8 +5,8 @@ import 'package:flutter_gif_search/main_screen.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     );
     final darkTheme = ThemeData(
       brightness: Brightness.dark,
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.lightBlue,
       useMaterial3: true,
     );
 
