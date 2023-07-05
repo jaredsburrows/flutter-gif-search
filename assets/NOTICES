@@ -29187,7 +29187,6 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 json_annotation
 json_serializable
-pedantic
 platform
 process
 
