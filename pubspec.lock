@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: enough_platform_widgets
-      sha256: "7d9ae2de02decbff6d565348d5c4255a91879ce3ba77ebeaaf39a354f86bf52a"
+      sha256: "2f0060cba4dd31ccb135b8d8ef4b66edd2e6fbd067ef8ae019a9511e7eb52026"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.2"
+    version: "0.7.4"
   fake_async:
     dependency: transitive
     description:
