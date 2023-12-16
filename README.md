@@ -60,6 +60,30 @@ flutter run
 flutter test
 ```
 
+## Local Debug Run
+
+```shell
+rm -f pubspec.lock && \
+flutter clean && \
+flutter upgrade && \
+flutter pub get && \
+flutter pub upgrade --major-versions && \
+
+osv-scanner -r . && \
+
+dart fix --dry-run && \
+dart fix --apply && \
+dart format . && \
+
+flutter analyze && \
+
+flutter test --platform=chrome --test-randomize-ordering-seed=random  && \
+
+flutter build ios --debug --no-codesign && \
+flutter build apk --debug && \
+flutter build web
+```
+
 ## License
 
 ```
