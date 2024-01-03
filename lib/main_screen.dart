@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enough_platform_widgets/enough_platform_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MyHomeScreen extends StatefulWidget {
@@ -14,6 +16,11 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class MyHomeScreenState extends State<MyHomeScreen> {
+  final logger = Logger(
+    printer: PrefixPrinter(
+      PrettyPrinter(printTime: false),
+    ),
+  );
   final List _dataList = <int>[];
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 5.0);
@@ -39,6 +46,7 @@ class MyHomeScreenState extends State<MyHomeScreen> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
   }
@@ -64,7 +72,12 @@ class MyHomeScreenState extends State<MyHomeScreen> {
             },
           ),
           PlatformPopupMenu(
-            icon: Icon(Icons.adaptive.more),
+            icon: Icon(
+              context.platformIcon(
+                material: Icons.more_vert_rounded,
+                cupertino: CupertinoIcons.ellipsis,
+              ),
+            ),
             options: [
               PopupMenuOption(
                 label: 'Open Source Licenses',
@@ -110,9 +123,15 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                   child: CachedNetworkImage(
                     imageUrl: imageUrl,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(
-                      widthFactor: sideLength / 3,
-                      child: PlatformCircularProgressIndicator(),
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Center(
+                      child: PlatformCircularProgressIndicator(
+                          material: (_, __) => MaterialProgressIndicatorData(
+                                value: progress.progress,
+                              ),
+                          cupertino: (_, __) => CupertinoProgressIndicatorData(
+                                animating: true,
+                              )),
                     ),
                     errorWidget: (context, url, error) =>
                         Icon(PlatformIcons(context).error),
@@ -127,10 +146,14 @@ class MyHomeScreenState extends State<MyHomeScreen> {
   }
 
   Future<void> _showLicensePage(BuildContext context) async {
-    showLicensePage(
-      context: context,
-      applicationName: 'Gif Search',
-      applicationVersion: _packageInfo.version,
+    Navigator.push(
+      context,
+      platformPageRoute(
+          context: context,
+          builder: (context) => LicensePage(
+                applicationName: 'Gif Search',
+                applicationVersion: _packageInfo.version,
+              )),
     );
   }
 
@@ -181,9 +204,14 @@ class MyHomeScreenState extends State<MyHomeScreen> {
                 child: CachedNetworkImage(
                   imageUrl: imageUrl,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Center(
-                    widthFactor: height / 3,
-                    child: PlatformCircularProgressIndicator(),
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                    child: PlatformCircularProgressIndicator(
+                        material: (_, __) => MaterialProgressIndicatorData(
+                              value: progress.progress,
+                            ),
+                        cupertino: (_, __) => CupertinoProgressIndicatorData(
+                              animating: true,
+                            )),
                   ),
                   errorWidget: (context, url, error) =>
                       Icon(PlatformIcons(context).error),

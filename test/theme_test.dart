@@ -12,7 +12,7 @@ void main() {
       'AppBar': find.byType(AppBar),
       'AppBar Title': find.text('Top Trending Gifs'),
       'AppBar Search Icon': find.byIcon(Icons.search), // Platform?
-      'AppBar More Icon': find.byIcon(Icons.adaptive.more),
+      'AppBar More Icon': find.byIcon(Icons.more_vert_rounded),
       // Gif List
       'Gif List': find.byType(GridView),
     };

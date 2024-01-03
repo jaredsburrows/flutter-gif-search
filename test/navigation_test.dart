@@ -8,7 +8,7 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const MyApp());
 
-    await tester.tap(find.byIcon(Icons.adaptive.more));
+    await tester.tap(find.byIcon(Icons.more_vert_rounded));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
@@ -26,7 +26,7 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const MyApp());
 
-    await tester.tap(find.byIcon(Icons.adaptive.more));
+    await tester.tap(find.byIcon(Icons.more_vert_rounded));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 

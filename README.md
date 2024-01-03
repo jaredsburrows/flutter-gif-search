@@ -77,7 +77,7 @@ dart format . && \
 
 flutter analyze && \
 
-flutter test --platform=chrome --test-randomize-ordering-seed=random  && \
+flutter test --platform=chrome --test-randomize-ordering-seed=random && \
 
 flutter build ios --debug --no-codesign && \
 flutter build apk --debug && \
