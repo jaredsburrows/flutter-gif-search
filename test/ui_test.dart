@@ -26,7 +26,7 @@ void main() {
     testWidgets('Verify AppBar is showing the more icon', (tester) async {
       await tester.pumpWidget(const MyApp());
 
-      final moreIcon = find.byIcon(Icons.adaptive.more);
+      final moreIcon = find.byIcon(Icons.more_vert_rounded);
       expect(moreIcon, findsOneWidget);
 
       final moreIconToolTip = find.byTooltip('Show menu');
@@ -36,7 +36,7 @@ void main() {
     testWidgets('Verify AppBar click and show more menu items', (tester) async {
       await tester.pumpWidget(const MyApp());
 
-      final moreIcon = find.byIcon(Icons.adaptive.more);
+      final moreIcon = find.byIcon(Icons.more_vert_rounded);
 
       await tester.tap(moreIcon);
       await tester.pump();

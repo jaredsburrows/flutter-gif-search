@@ -39,20 +39,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final lightTheme = ThemeData(
-      brightness: Brightness.light,
-      primarySwatch: Colors.blue,
-      useMaterial3: true,
-    );
-    final darkTheme = ThemeData(
-      brightness: Brightness.dark,
-      primarySwatch: Colors.lightBlue,
-      useMaterial3: true,
-    );
-
     return Theme(
-      data: _brightness == Brightness.light ? lightTheme : darkTheme,
+      data: ThemeData(
+        brightness: _brightness,
+        primarySwatch: Colors.lightBlue,
+      ),
       child: PlatformProvider(
+        settings: PlatformSettingsData(
+          // This makes the platform widget use the Material icons
+          // For example - icon: Icon(Icons.adaptive.more),
+          // IconData get more_outlined => !_isCupertino() ? Icons.more_vert_outlined : Icons.more_horiz_outlined;
+          platformStyle: PlatformStyleData(
+            web: Icons.adaptive.more == Icons.more_vert
+                ? PlatformStyle.Material
+                : PlatformStyle.Cupertino,
+          ),
+        ),
         builder: (context) => const PlatformApp(
           debugShowCheckedModeBanner: false,
           localizationsDelegates: <LocalizationsDelegate<dynamic>>[
