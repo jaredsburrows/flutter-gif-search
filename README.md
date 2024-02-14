@@ -79,9 +79,9 @@ flutter analyze && \
 
 flutter test --platform=chrome --test-randomize-ordering-seed=random && \
 
+flutter build web && \
 flutter build ios --debug --no-codesign && \
-flutter build apk --debug && \
-flutter build web
+flutter build apk --debug
 ```
 
 ## License
