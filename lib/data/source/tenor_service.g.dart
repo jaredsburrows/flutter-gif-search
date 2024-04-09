@@ -12,7 +12,9 @@ class _TenorService implements TenorService {
   _TenorService(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'https://g.tenor.com';
+  }
 
   final Dio _dio;
 
@@ -20,10 +22,10 @@ class _TenorService implements TenorService {
 
   @override
   Future<HttpResponse<TenorResponseDto>> getSearchResults(
-    query,
-    position,
+    String query,
+    String? position,
   ) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'q': query,
       r'pos': position,
@@ -43,15 +45,20 @@ class _TenorService implements TenorService {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = TenorResponseDto.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<TenorResponseDto>> getTrendingResults(position) async {
-    const _extra = <String, dynamic>{};
+  Future<HttpResponse<TenorResponseDto>> getTrendingResults(
+      String? position) async {
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'pos': position};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
@@ -68,7 +75,11 @@ class _TenorService implements TenorService {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = TenorResponseDto.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
@@ -85,5 +96,22 @@ class _TenorService implements TenorService {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

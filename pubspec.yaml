@@ -26,13 +26,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_platform_widgets: ^6.0.2 # https://pub.dev/packages/flutter_platform_widgets
+  freezed_annotation: ^2.4.1 # https://pub.dev/packages/freezed_annotation
   json_annotation: ^4.8.1 # https://pub.dev/packages/json_annotation
   logger: ^2.0.2+1 # https://pub.dev/packages/logger
-  package_info_plus: ^5.0.1 # https://pub.dev/packages/package_info_plus
+  package_info_plus: ^7.0.0 # https://pub.dev/packages/package_info_plus
   retrofit: ^4.0.3 # https://pub.dev/packages/retrofit
   url_strategy: ^0.2.0 # https://pub.dev/packages/url_strategy
 
 dev_dependencies:
+  analyzer: ^6.4.1 # https://pub.dev/packages/analyzer
   build_runner: ^2.4.8 # https://pub.dev/packages/build_runner
   flutter_lints: ^3.0.1 # https://pub.dev/packages/flutter_lints
   flutter_test: # https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
@@ -42,3 +44,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
