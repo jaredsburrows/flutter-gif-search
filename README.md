@@ -69,11 +69,13 @@ flutter upgrade && \
 flutter pub get && \
 flutter pub upgrade --major-versions && \
 
+dart run build_runner build --delete-conflicting-outputs && \
+
 osv-scanner -r . && \
 
+dart format . && \
 dart fix --dry-run && \
 dart fix --apply && \
-dart format . && \
 
 flutter analyze && \
 
